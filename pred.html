@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alzheimer Prediction</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<!-- header section starts -->
+<header class="header">
+    <a href="#" class="logo"> <i class="fas fa-brain"></i> Cognitive Decline Prediction</a>
+
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="#prediction">Prediction</a>
+    </nav>
+
+    <div id="menu-btn" class="fas fa-bars"></div>
+</header>
+<!-- header section ends -->
+<br><br>
+
+<!-- Prediction Section Starts -->
+<section class="about" id="prediction">
+    <br><br><br><br>
+    <h1 class="heading">Cognitive Decline <span>Prediction</span></h1>
+    <div class="row" style="display: flex; justify-content: space-between;"> 
+        <div class="content" style="flex: 1; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+          <h4 style="font-size: large;">Enter Your Name and Upload Your MRI Scanned Image</h4>
+          <p>Upload an MRI scan image of the Cognitive Decline predict whether there is a tumor present. Our model uses advanced deep learning techniques to perform this classification.</p>
+      
+          <form action="{{url_for('pred')}}" method="POST" enctype="multipart/form-data">
+            <label for="name" style="display: block;font-size: larger">Your Name:</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              placeholder="Enter your name" 
+              required 
+              style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box;"
+            >
+      
+            <div class="file-upload">
+              <input type="file" name="mri_image" accept="image/*" required 
+                     style="display: block; width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box;">
+            </div>
+            <br>
+            <button type="submit" class="btn">
+              Predict <span class="fas fa-upload"></span>
+            </button>
+          </form>
+        </div>
+      
+        <div class="image" style="flex: 1; text-align: center;">
+          <img src="static/image/b4.svg" alt="Upload Image" style="max-width: 80%; height: auto;">
+        </div>
+      </div>
+    <br><br><br>
+</section>
+
+</body>
+</html>

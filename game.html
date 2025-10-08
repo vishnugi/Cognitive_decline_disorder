@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroDetect AI - Cognitive Assessment Games</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #212529;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: #212529;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            color: #6c757d;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+        
+        .games-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+    gap: 20px; /* Space between blocks */
+    justify-content: center;
+    align-items: center;
+}
+        
+        .game-card {
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            width: 420px;
+            transition: box-shadow 0.2s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .game-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+        
+        .game-header {
+            height: 12px;
+            background-color: #3498db;
+        }
+        
+        .category-header {
+            background-color: #2ecc71;
+        }
+        
+        .my-header{
+            background-color: #ee9134;
+        }
+        
+        .game-content {
+            padding: 25px;
+        }
+        
+        .game-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 15px 0;
+            color: #212529;
+        }
+        
+        .game-description {
+            color: #495057;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .cognitive-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        
+        .cognitive-tag {
+            background-color: #f1f8ff;
+            color: #3498db;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .memory-tag {
+            background-color: #f1f8ff;
+            color: #3498db;
+            border: 1px solid #d0e3ff;
+        }
+        
+        .executive-tag {
+            background-color: #f1fbf8;
+            color: #16a085;
+            border: 1px solid #d0f0e8;
+        }
+        
+        .attention-tag {
+            background-color: #fff8f1;
+            color: #e67e22;
+            border: 1px solid #fce8d0;
+        }
+        
+        .language-tag {
+            background-color: #f8f1ff;
+            color: #9b59b6;
+            border: 1px solid #e8d0fc;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            font-size: 14px;
+        }
+        
+        .play-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .category-button {
+            background-color: #2ecc71;
+        }
+        
+        .category-button:hover {
+            background-color: #27ae60;
+        }
+
+        .my-button {
+            background-color:  #ee9134;
+        }
+        
+        .my-button:hover {
+    background-color: #d67f2c; /* Darker shade of #ee9134 */
+    transition: background-color 0.3s ease-in-out;
+}
+
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+            font-size: 13px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 14px;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NeuroDetect AI</h1>
+            <p class="subtitle">Cognitive Assessment Games</p>
+        </header>
+        
+        <div class="games-container">
+            <!-- Memory Sequence Game Card -->
+            <div class="game-card">
+                <div class="game-header"></div>
+                <div class="game-content">
+                    <h2 class="game-title">Memory Sequence Game</h2>
+                    <p class="game-description">Test visual-spatial working memory by repeating increasingly complex sequences. Observe the pattern of highlighted tiles and reproduce it in the correct order.</p>
+                    
+                    <div class="cognitive-area">
+                        <span class="cognitive-tag memory-tag">Working Memory</span>
+                        <span class="cognitive-tag attention-tag">Attention</span>
+                        <span class="cognitive-tag executive-tag">Pattern Recognition</span>
+                    </div>
+                    
+                    <a href="/game1" class="play-button">Launch Assessment</a>
+                    
+                    <div class="game-stats">
+                        <span>Completion time: ~3-5 minutes</span>
+                        <span>Difficulty: Adaptive</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word Category Game Card -->
+            <div class="game-card">
+                <div class="game-header category-header"></div>
+                <div class="game-content">
+                    <h2 class="game-title">Word Category Game</h2>
+                    <p class="game-description">Evaluate semantic memory and executive function by selecting words belonging to specific categories while filtering out distractors within time constraints.</p>
+                    
+                    <div class="cognitive-area">
+                        <span class="cognitive-tag language-tag">Semantic Memory</span>
+                        <span class="cognitive-tag executive-tag">Executive Function</span>
+                        <span class="cognitive-tag attention-tag">Processing Speed</span>
+                    </div>
+                    
+                    <a href="/game2" class="play-button category-button">Launch Assessment</a>
+                    
+                    <div class="game-stats">
+                        <span>Completion time: ~4-6 minutes</span>
+                        <span>Difficulty: Progressive</span>
+                    </div>
+                </div>
+            </div>
+
+<!------------------------------------- game----------------------------------------->
+            <div class="game-card">
+                <div class="game-header my-header"></div>
+                <div class="game-content">
+                    <h2 class="game-title">Color Match Game</h2>
+                    <p class="game-description">Enhance your memory and cognitive skills with this fun and interactive Color Match Game! 🎨 Simply select the correct color from the options to match the given target color.</p>
+                    
+                    <div class="cognitive-area">
+                        <span class="cognitive-tag language-tag">Fun</span>
+                        <span class="cognitive-tag executive-tag">Engaging</span>
+                        <span class="cognitive-tag attention-tag">Brain-Boosting</span>
+                    </div>
+                    
+                    <a href="/game3" class="play-button category-button my-button">Launch Assessment</a>
+                    
+                    <div class="game-stats">
+                        <span>Completion time: ~4-6 minutes</span>
+                        <span>Difficulty: Progressive</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <footer>
+            <p>© 2025 NeuroDetect AI - Alzheimer's Detection Project</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alzheimer - Prediction Result</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        .prediction-card {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .c-header {
+            color: var(--black);
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .card-title {
+            color: var(--black);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .description {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            color: var(--light-color);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<!-- header section starts  -->
+<header class="header">
+    <a href="#" class="logo"> <i class="fas fa-brain"></i> Alzheimer </a>
+
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="#prediction">Prediction Result</a>
+    </nav>
+
+    <div id="menu-btn" class="fas fa-bars"></div>
+</header>
+
+<br>
+<br><section class="about" id="prediction">
+    <br><br>
+    <h1 class="heading">Prediction <span>Result</span></h1>
+    <div class="row">
+        <div class="prediction-card">
+            <div class="card-header">
+                <h4 class="c-header">MODEL PREDICTION</h4>
+                <hr>
+            </div>
+            <div class="card-body">
+                <div class="image-result-container" 
+                     style="display: flex; gap: 2rem; align-items: flex-start; justify-content: space-between; flex-direction: row;">
+            
+                    <!-- Image Section -->
+                    <div class="image-section" style="flex: 1; display: flex; justify-content: center; align-items: center;">
+                        
+                        <img src="{{ url_for('static', filename='uploads/' + data[0] + '.jpg') }}" 
+                             alt="Brain Scan" 
+                             style="width: 100%; max-width: 350px; height: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    </div>
+            
+                    <!-- Result Section -->
+                    <div class="result-section" style="flex: 1; padding: 1rem; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h3 class="card-title" style="font-size: 2rem; color: #333;">Name: <b>{{data[0]}}</b></h3>
+                        <hr>
+                        <h3 class="card-title" style="font-size: 2rem; color: #333;">Diagnosis: <b>{{data[1]}}</b></h3>
+                        
+                        <h3 class="card-title" style="font-size: 2rem; color: #333;">Score: <b>{{data[2]}}</b></h3>
+                    </div>
+            
+                </div>
+            
+                <!-- Download Button -->
+                <div style="display: flex; justify-content: center; margin-top: 2rem;">
+                    <a href="{{ url_for('download_pdf', name=data[0], diagnosis=data[1], score=data[2]) }}" 
+                       class="btn btn-primary">Download Report</a>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</section>
+
+
+<section class="footer">
+    <div class="credit"> created by <span>NeuroDetect AI Team</span> | all rights reserved </div>
+</section>
+
+</body>
+</html>

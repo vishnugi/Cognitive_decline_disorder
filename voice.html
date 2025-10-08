@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recorder</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #f3f1fc;
+            padding: 30px;
+        }
+        .container {
+            max-width: 450px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        h2 {
+            color: #5e4caf;
+            font-weight: 600;
+        }
+        .info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 12px 20px;
+            margin: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .button-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    gap: 15px; /* Adds spacing between buttons */
+    margin-top: 20px; /* Adjust spacing from the content above */
+}
+
+        button:hover {
+            transform: scale(1.05);
+        }
+        .start {
+            background: linear-gradient(45deg, #8b67d3, #a98cf0);
+            color: white;
+        }
+        .stop {
+            background: linear-gradient(45deg, #e63946, #ff6b6b);
+            color: white;
+        }
+        .download, .restart {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .download {
+            background: linear-gradient(45deg, #28a745, #5cd65c); /* Green gradient */
+            color: white;
+        }
+        .restart {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+        }
+        .download:hover, .restart:hover {
+            opacity: 0.9;
+        }
+        .icon {
+            font-size: 20px;
+        }
+        .info-box {
+            margin-top: 20px;
+            background: #f8f6fc;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+            animation: slideUp 0.8s ease-in-out;
+        }
+        .info-box p {
+            margin: 0;
+            font-size: 14px;
+            color: #444;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🎙️ Voice Notes</h2>
+        <p class="info">Easily record, save, and download your voice notes to remember important things.</p>
+        <div class="button-container">
+            <button class="start" onclick="startRecording()">🎤 Start Recording</button>
+            <button class="stop" onclick="stopRecording()" disabled>⏹ Stop Recording</button>
+            <button id="downloadButton" class="download" onclick="downloadAudio()">⬇ Download Voice Note</button>
+            <button id="restartButton" class="restart" onclick="restartPage()">🔄 Start Again</button>
+        </div>
+
+        <div class="info-box">
+            <p>📌 <b>Did you know?</b> Voice notes help boost memory retention and make it easier to recall tasks, ideas, and reminders effortlessly!</p>
+        </div>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob;
+
+        async function startRecording() {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = () => {
+                audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                document.getElementById('downloadButton').style.display = 'flex';
+                document.getElementById('restartButton').style.display = 'flex';
+            };
+
+            mediaRecorder.start();
+            audioChunks = [];
+            document.querySelector(".start").disabled = true;
+            document.querySelector(".stop").disabled = false;
+        }
+
+        function stopRecording() {
+            mediaRecorder.stop();
+            document.querySelector(".start").disabled = false;
+            document.querySelector(".stop").disabled = true;
+        }
+
+        function downloadAudio() {
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const a = document.createElement("a");
+            a.href = audioUrl;
+            a.download = "voice-note.wav";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function restartPage() {
+            location.reload();
+        }
+    </script>
+
+</body>
+</html>

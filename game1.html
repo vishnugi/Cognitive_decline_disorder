@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Sequence Game</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            padding: 50px;
+        }
+        .game-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 320px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .tile {
+            width: 80px;
+            height: 80px;
+            background-color: #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tile.highlight {
+            background-color: #4CAF50;
+        }
+        .tile.clicked {
+            background-color: #2196F3;
+        }
+        .tile.wrong {
+            background-color: #f44336;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .score {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .results {
+            margin-top: 15px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h2>Memory Sequence Game</h2>
+        <p>Watch the pattern and repeat it!</p>
+        
+        <div class="grid" id="gameGrid">
+            <div class="tile" data-index="0"></div>
+            <div class="tile" data-index="1"></div>
+            <div class="tile" data-index="2"></div>
+            <div class="tile" data-index="3"></div>
+            <div class="tile" data-index="4"></div>
+            <div class="tile" data-index="5"></div>
+            <div class="tile" data-index="6"></div>
+            <div class="tile" data-index="7"></div>
+            <div class="tile" data-index="8"></div>
+        </div>
+        
+        <div class="controls">
+            <button id="startBtn">Start Game</button>
+        </div>
+        
+        <div class="score">Level: <span id="level">1</span></div>
+        <div class="results" id="results"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tiles = document.querySelectorAll('.tile');
+            const startBtn = document.getElementById('startBtn');
+            const levelEl = document.getElementById('level');
+            const resultsEl = document.getElementById('results');
+            
+            let sequence = [];
+            let playerSequence = [];
+            let level = 1;
+            let canClick = false;
+            let gameActive = false;
+            
+            // Event listeners
+            startBtn.addEventListener('click', startGame);
+            tiles.forEach(tile => {
+                tile.addEventListener('click', () => tileClick(tile));
+            });
+            
+            function startGame() {
+                if (gameActive) return;
+                
+                gameActive = true;
+                level = 1;
+                levelEl.textContent = level;
+                resultsEl.textContent = "Watch carefully!";
+                startBtn.textContent = "Game in progress...";
+                startBtn.disabled = true;
+                
+                setTimeout(() => {
+                    nextRound();
+                }, 1000);
+            }
+            
+            function nextRound() {
+                playerSequence = [];
+                sequence = [];
+                
+                // Generate sequence based on current level
+                for (let i = 0; i < level + 1; i++) {
+                    sequence.push(Math.floor(Math.random() * 9));
+                }
+                
+                // Show sequence to player
+                showSequence();
+            }
+            
+            function showSequence() {
+                canClick = false;
+                let i = 0;
+                
+                const interval = setInterval(() => {
+                    if (i >= sequence.length) {
+                        clearInterval(interval);
+                        canClick = true;
+                        resultsEl.textContent = "Your turn!";
+                        return;
+                    }
+                    
+                    const tileIndex = sequence[i];
+                    highlightTile(tiles[tileIndex]);
+                    i++;
+                }, 800);
+            }
+            
+            function highlightTile(tile) {
+                tile.classList.add('highlight');
+                setTimeout(() => {
+                    tile.classList.remove('highlight');
+                }, 600);
+            }
+            
+            function tileClick(tile) {
+                if (!canClick || !gameActive) return;
+                
+                const tileIndex = parseInt(tile.dataset.index);
+                playerSequence.push(tileIndex);
+                
+                tile.classList.add('clicked');
+                setTimeout(() => {
+                    tile.classList.remove('clicked');
+                }, 300);
+                
+                // Check if the move is correct
+                const currentIndex = playerSequence.length - 1;
+                if (playerSequence[currentIndex] !== sequence[currentIndex]) {
+                    gameOver();
+                    return;
+                }
+                
+                // Check if the sequence is complete
+                if (playerSequence.length === sequence.length) {
+                    levelUp();
+                }
+            }
+            
+            function levelUp() {
+                level++;
+                levelEl.textContent = level;
+                resultsEl.textContent = "Correct! Next level...";
+                canClick = false;
+                
+                setTimeout(() => {
+                    nextRound();
+                }, 1500);
+            }
+            
+            function gameOver() {
+                gameActive = false;
+                canClick = false;
+                
+                // Show the correct sequence
+                sequence.forEach((tileIndex, i) => {
+                    setTimeout(() => {
+                        highlightTile(tiles[tileIndex]);
+                    }, i * 300);
+                });
+                
+                resultsEl.textContent = `Game over! You reached level ${level}.`;
+                startBtn.textContent = "Play Again";
+                startBtn.disabled = false;
+                
+                // Show wrong move
+                const wrongTileIndex = playerSequence[playerSequence.length - 1];
+                const wrongTile = tiles[wrongTileIndex];
+                wrongTile.classList.add('wrong');
+                setTimeout(() => {
+                    wrongTile.classList.remove('wrong');
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
